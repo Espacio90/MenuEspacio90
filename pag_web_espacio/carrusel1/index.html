@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Subir Imágenes</title>
+    <link rel="icon" href="../img/330841588_980815506215904_8074317732561019356_n.jpg">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            margin: 0;
+            padding: 0;
+            color: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #central {
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            background: rgba(28, 28, 28, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        #subirimagenesV2 {
+            color: #f5f5f5;
+        }
+
+        .titulo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        #imagen-label {
+            font-weight: bold;
+            color: #aaa;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        #imagen {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #222;
+            color: #fff;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        #imagen:focus {
+            border-color: #ffd700;
+        }
+
+        button[type="submit"] {
+            background-color: #ffd700;
+            color: #121212;
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: none;
+            margin-top: 10px;
+            width: 25%;
+            display: block;
+            margin: 0 auto;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #ffc107;
+            color: #121212;
+            transform: scale(1.1);
+        }
+
+        .volver-btn {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #ffd700;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .volver-btn:hover {
+            color: #ffc107;
+        }
+
+        #mensaje-exito {
+            color: green;
+            margin-top: 10px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .titulo {
+                font-size: 1.5rem;
+            }
+
+            button[type="submit"] {
+                font-size: 12px;
+                padding: 8px 20px;
+                width: auto;
+            }
+
+            input,
+            select {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="contenedor">
+        <div id="central">
+            <div id="subirimagenesV2">
+                <img src="../img/logo-Photoroomedit.png" />
+                <div class="titulo letraSerif">Ingresar Imagen al Carrusel</div>
+                <form action="upload.php" method="post" enctype="multipart/form-data">
+                    <label id="imagen-label" for="imagen">Selecciona una imagen:</label>
+                    <input type="file" name="imagen" id="imagen" required>
+                    <button type="submit" name="subir">Subir Imagen</button>
+                </form>
+
+                <div id="mensaje-exito" style="color: green; margin-top: 10px;"></div>
+
+                <a href="../inbox.php" class="volver-btn">Volver Al Portal</a>
+
+                <div id="galeria">
+                    <!-- Las imágenes se mostrarán aquí -->
+                </div>
+
+                <script>
+                    function eliminarImagen(id) {
+                        if (confirm("¿Estás seguro de que deseas eliminar esta imagen?")) {
+                            var form = document.createElement('form');
+                            form.method = 'post';
+                            form.action = 'delete_image.php';
+
+                            var inputId = document.createElement('input');
+                            inputId.type = 'hidden';
+                            inputId.name = 'id';
+                            inputId.value = id;
+
+                            form.appendChild(inputId);
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                    }
+                    window.onload = function () {
+                        var urlParams = new URLSearchParams(window.location.search);
+                        if (urlParams.has('exito') && urlParams.get('exito') == 1) {
+                            alert('Imagen subida exitosamente.');
+                        }
+                    };
+                </script>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
